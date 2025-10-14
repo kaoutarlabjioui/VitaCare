@@ -2,8 +2,36 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
-             version="3.2">
-  <persistence-unit name="default">
+             version="3.1">
+  <persistence-unit name="VitaCarePU" transaction-type="RESOURCE_LOCAL">
+      <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+           <class>org.vitacare.entity.User</class>
+           <class>org.vitacare.entity.Doctor</class>
+           <class>org.vitacare.entity.Staff</class>
+           <class>org.vitacare.entity.Patient</class>
+           <class>org.vitacare.entity.Department</class>
+           <class>org.vitacare.entity.Speciality</class>
+           <class>org.vitacare.entity.Availability</class>
+           <class>org.vitacare.entity.Appointment</class>
+           <class>org.vitacare.entity.MedicalNote</class>
+
+        <properties>
+            <!--  Database Connection -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vitacare"/>
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+            <property name="jakarta.persistence.jdbc.password" value="0000"/>
+
+            <!--  Hibernate Configuration -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+            <!--  Optional: Connection Pool Settings -->
+            <property name="hibernate.connection.pool_size" value="10"/>
+        </properties>
 
   </persistence-unit>
 </persistence>
