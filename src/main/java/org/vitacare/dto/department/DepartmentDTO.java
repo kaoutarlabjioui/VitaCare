@@ -3,11 +3,16 @@ package org.vitacare.dto.department;
 public class DepartmentDTO {
     private Long id;
     private String name;
-
-    public DepartmentDTO(Long id, String name) {
+    private String description;
+    private String code;
+   public DepartmentDTO(){}
+    public DepartmentDTO(Long id, String name,String description,String code) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.code = code;
     }
+
 
     public Long getId() {
         return id;
@@ -24,4 +29,9 @@ public class DepartmentDTO {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getDescription() { return description;}
+    public void setDescription(String description){ this.description = description;}
+    public String getCode(){return code;}
+    public void setCode(String code){this.code = code ;}
 }

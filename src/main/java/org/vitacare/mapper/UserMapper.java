@@ -54,7 +54,7 @@ public class UserMapper {
         }
     }
 
-    // Convert User → LoginResponseDTO
+
     public static LoginResponseDTO toLoginResponse(User user) {
         String type = user instanceof Doctor ? "DOCTOR"
                 : user instanceof Patient ? "PATIENT"

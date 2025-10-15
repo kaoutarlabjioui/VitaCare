@@ -30,7 +30,7 @@ public class Department {
         this.code = code;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

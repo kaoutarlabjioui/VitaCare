@@ -20,13 +20,16 @@ public class AuthServlet extends HttpServlet {
 @Inject
     private AuthService authService;
 
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        // Détermine l'action via un paramètre : ?action=login ou ?action=register
         String action = req.getParameter("action");
+
+        if ("logout".equalsIgnoreCase(action)) {
+            handleLogout(req, resp);
+            return;
+        }
 
         if ("register".equalsIgnoreCase(action)) {
             req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
@@ -34,6 +37,7 @@ public class AuthServlet extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
     }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -64,7 +68,7 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
-        // ✅ Login réussi
+
         HttpSession session = req.getSession();
         session.setAttribute("user", response);
 
@@ -98,5 +102,17 @@ public class AuthServlet extends HttpServlet {
             req.setAttribute("error", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/views/register.jsp").forward(req, resp);
         }
+    }
+
+    private void handleLogout(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+
+        HttpSession session = req.getSession(false); // false = ne pas créer de nouvelle session
+        if (session != null) {
+            session.invalidate(); // supprime la session existante
+        }
+
+
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

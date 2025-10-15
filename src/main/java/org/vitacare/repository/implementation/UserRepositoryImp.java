@@ -35,7 +35,4 @@ public class UserRepositoryImp implements UserRepository {
             throw e;
         }
     }
-
-    public static class DepartmentRepositoryImp {
-    }
 }
