@@ -87,12 +87,12 @@ public class AuthServlet extends HttpServlet {
                     req.getParameter("password"),
                     req.getParameter("firstName"),
                     req.getParameter("lastName"),
-                    "PATIENT", // auto-inscription = patient
+                    "PATIENT", 
                     null, null,
                     req.getParameter("cin"),
                     req.getParameter("phone"),
                     req.getParameter("address"),
-                    null, null, null
+                    null, null
             );
 
             authService.register(dto);
@@ -107,9 +107,9 @@ public class AuthServlet extends HttpServlet {
     private void handleLogout(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
 
-        HttpSession session = req.getSession(false); // false = ne pas créer de nouvelle session
+        HttpSession session = req.getSession(false);
         if (session != null) {
-            session.invalidate(); // supprime la session existante
+            session.invalidate();
         }
 
 

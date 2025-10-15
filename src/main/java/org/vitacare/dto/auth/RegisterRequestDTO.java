@@ -13,10 +13,9 @@ public class RegisterRequestDTO {
     private String phone;        // patient only
     private String address;      // patient only
     private String position;     // staff only
-    private Long specialityId;   // doctor only
-    private Long departmentId;   // doctor only
+    private Long specialityId;   // doctor only// doctor only
 
-    public RegisterRequestDTO(String email, String password, String firstName, String lastName, String userType, String registration, String title, String cin, String phone, String address, String position, Long specialityId, Long departmentId) {
+    public RegisterRequestDTO(String email, String password, String firstName, String lastName, String userType, String registration, String title, String cin, String phone, String address, String position, Long specialityId) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -29,7 +28,6 @@ public class RegisterRequestDTO {
         this.address = address;
         this.position = position;
         this.specialityId = specialityId;
-        this.departmentId = departmentId;
     }
 
     public String getEmail() {
@@ -126,14 +124,6 @@ public class RegisterRequestDTO {
 
     public void setSpecialityId(Long specialityId) {
         this.specialityId = specialityId;
-    }
-
-    public Long getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
     }
 
    

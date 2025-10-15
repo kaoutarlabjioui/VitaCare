@@ -7,15 +7,14 @@ public class DoctorDTO extends UserDTO {
     private String registration;
     private String title;
     private SpecialityDTO speciality;
-    private DepartmentDTO department;
 
 
 
-    public DoctorDTO(String registration, String title, SpecialityDTO speciality, DepartmentDTO department) {
+
+    public DoctorDTO(String registration, String title, SpecialityDTO speciality) {
         this.registration = registration;
         this.title = title;
         this.speciality = speciality;
-        this.department = department;
     }
 
     public String getRegistration() {
@@ -42,11 +41,5 @@ public class DoctorDTO extends UserDTO {
         this.speciality = speciality;
     }
 
-    public DepartmentDTO getDepartment() {
-        return department;
-    }
 
-    public void setDepartment(DepartmentDTO department) {
-        this.department = department;
-    }
 }

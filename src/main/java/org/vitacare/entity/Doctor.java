@@ -1,6 +1,7 @@
 package org.vitacare.entity;
 
 import jakarta.persistence.*;
+import org.vitacare.dto.specialityDTO.SpecialityDTO;
 
 import java.util.List;
 
@@ -16,9 +17,6 @@ public class Doctor extends User {
     @JoinColumn(name = "speciality_id")
     private Speciality speciality;
 
-    @ManyToOne
-    @JoinColumn(name = "department_id")
-    private Department department;
 
     @OneToMany(mappedBy = "doctor")
     private List<Availability> availabilities;
@@ -29,12 +27,12 @@ public class Doctor extends User {
 
     public Doctor() {}
 
-    public Doctor(int id, String firstName, String lastName, String email, String password, boolean isActive, boolean isAdmin, String registration, String title, Speciality speciality, Department department, List<Availability> availabilities, List<Appointment> appointments) {
+    public Doctor(int id, String firstName, String lastName, String email, String password, boolean isActive, boolean isAdmin, String registration, String title, Speciality speciality,  List<Availability> availabilities, List<Appointment> appointments) {
         super(id, firstName, lastName, email, password, isActive, isAdmin);
         this.registration = registration;
         this.title = title;
         this.speciality = speciality;
-        this.department = department;
+
         this.availabilities = availabilities;
         this.appointments = appointments;
     }
@@ -63,13 +61,6 @@ public class Doctor extends User {
         this.speciality = speciality;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
 
     public List<Availability> getAvailabilities() {
         return availabilities;
@@ -93,7 +84,7 @@ public class Doctor extends User {
                 "registration='" + registration + '\'' +
                 ", title='" + title + '\'' +
                 ", speciality=" + speciality +
-                ", department=" + department +
+
                 ", availibilities=" + availabilities +
                 ", appointements=" + appointments +
                 '}';

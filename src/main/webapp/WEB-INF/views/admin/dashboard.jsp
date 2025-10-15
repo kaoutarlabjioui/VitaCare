@@ -189,13 +189,18 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/speciality/">
+                <a class="nav-link" href="${pageContext.request.contextPath}/speciality?action=list">
                     <i class="bi bi-star me-2"></i> Spécialités
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/users/">
                     <i class="bi bi-person-gear me-2"></i> Utilisateurs
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/admin/users">
+                    <i class="bi bi-person-gear me-2"></i> Créer Utilisateur
                 </a>
             </li>
         </ul>
@@ -228,6 +233,7 @@
 </div>
 
 <div class="main-content">
+
     <div class="page-header">
         <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -240,6 +246,7 @@
             </div>
         </div>
     </div>
+
     <div class="row g-4 mb-4">
         <div class="col-md-3">
             <div class="stat-card primary">
@@ -301,7 +308,6 @@
             </div>
         </div>
     </div>
-
     <div class="row g-4 mb-4">
         <div class="col-12">
             <h4 class="mb-3">Actions Rapides</h4>
@@ -346,8 +352,17 @@
                 <p class="text-muted mb-0">Planifier un RDV</p>
             </a>
         </div>
-    </div>
 
+        <div class="col-md-3">
+            <a href="${pageContext.request.contextPath}/admin/users" class="quick-action-card">
+                <div class="quick-action-icon">
+                    <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <h5>Créer Utilisateur</h5>
+                <p class="text-muted mb-0">Admin ou Personnel</p>
+            </a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="stat-card">

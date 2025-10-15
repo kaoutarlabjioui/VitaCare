@@ -77,7 +77,6 @@ public class Department {
                 ", code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", specialities=" + specialities +
                 '}';
     }
 }

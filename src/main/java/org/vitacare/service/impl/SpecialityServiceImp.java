@@ -64,4 +64,8 @@ public class SpecialityServiceImp implements SpecialityService {
         specialityRepository.delete(id);
     }
 
+    @Override
+    public Speciality findById(Long id) {
+        return specialityRepository.findById(id);
+    }
 }

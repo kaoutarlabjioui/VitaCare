@@ -9,7 +9,7 @@ import org.vitacare.entity.Staff;
 import org.vitacare.entity.User;
 @ApplicationScoped
 public class UserMapper {
-    // Convert RegisterRequestDTO → User (Doctor, Patient, Staff)
+
     public static User toEntity(RegisterRequestDTO dto) {
         if (dto == null) return null;
 

@@ -10,7 +10,6 @@ public class UserRepositoryImp implements UserRepository {
     @Inject
     private  EntityManager em;
 
-
     @Override
     public User findByEmail(String email) {
         try {
@@ -35,4 +34,13 @@ public class UserRepositoryImp implements UserRepository {
             throw e;
         }
     }
+    @Override
+    public User findById(Long id){
+     return em.find(User.class,id);
+
+    }
+
+
+
+
 }
