@@ -6,15 +6,18 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private boolean isAdmin;
+    private boolean isActive;
 
 
     public UserDTO() {}
-    public UserDTO(int id, String firstName, String email, String lastName, boolean isAdmin) {
+    public UserDTO(int id, String firstName, String email, String lastName, boolean isAdmin,boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.email = email;
         this.lastName = lastName;
         this.isAdmin = isAdmin;
+        this.isActive= isActive;
+
     }
 
     public int getId() {
@@ -56,7 +59,10 @@ public class UserDTO {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
-
+    public boolean isActive() {
+        return isActive;
+    }
     public void setActive(boolean active) {
+        isActive=active;
     }
 }

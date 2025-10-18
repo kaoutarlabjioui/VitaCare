@@ -19,16 +19,37 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">
-                            <i class="bi bi-speedometer2"></i> Tableau de bord
-                        </a>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.loggedDoctor}">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/doctor/dashboard">
+                                    <i class="bi bi-speedometer2"></i> Tableau de bord (Docteur)
+                                </a>
+                            </c:when>
+                            <c:when test="${not empty sessionScope.loggedPatient}">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/patient/dashboard">
+                                    <i class="bi bi-speedometer2"></i> Tableau de bord (Patient)
+                                </a>
+                            </c:when>
+                            <c:when test="${not empty sessionScope.loggedStaff}">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/staff/dashboard">
+                                    <i class="bi bi-speedometer2"></i> Tableau de bord (Staff)
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="nav-link disabled" href="#">
+                                    <i class="bi bi-speedometer2"></i> Tableau de bord
+                                </a>
+                            </c:otherwise>
+                        </c:choose>
                     </li>
 
-                    <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                    <!-- Section visible uniquement pour les administrateurs -->
+                    <c:if test="${sessionScope.user.admin}">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                                 <i class="bi bi-gear"></i> Administration
@@ -42,7 +63,10 @@
                         </li>
                     </c:if>
 
-                    <c:if test="${sessionScope.user.role == 'DOCTOR' || sessionScope.user.role == 'STAFF' || sessionScope.user.role == 'ADMIN'}">
+                    <!-- Rendez-vous visible pour DOCTOR / STAFF / ADMIN -->
+                    <c:if test="${sessionScope.user.userType == 'DOCTOR'
+                                 || sessionScope.user.userType == 'STAFF'
+                                 || sessionScope.user.admin}">
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/appointments">
                                 <i class="bi bi-calendar-check"></i> Rendez-vous
@@ -50,7 +74,8 @@
                         </li>
                     </c:if>
 
-                    <c:if test="${sessionScope.user.role == 'DOCTOR'}">
+                    <!-- Section spécifique aux docteurs -->
+                    <c:if test="${sessionScope.user.userType == 'DOCTOR'}">
                         <li class="nav-item">
                             <a class="nav-link" href="${pageContext.request.contextPath}/availability">
                                 <i class="bi bi-clock"></i> Disponibilités
@@ -65,20 +90,23 @@
                 </c:if>
             </ul>
 
+            <!-- Partie droite du header (profil / déconnexion / connexion) -->
             <ul class="navbar-nav">
                 <c:if test="${sessionScope.user != null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> ${sessionScope.user.firstName} ${sessionScope.user.lastName}
+                            <i class="bi bi-person-circle"></i>
+                                ${sessionScope.user.firstName} ${sessionScope.user.lastName}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/profile">Mon profil</a></li>
                             <li><a class="dropdown-item" href="${pageContext.request.contextPath}/change-password">Changer mot de passe</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/auth/logout">Déconnexion</a></li>
+                            <li><a class="dropdown-item" href="${pageContext.request.contextPath}/auth?action=logout">Déconnexion</a></li>
                         </ul>
                     </li>
                 </c:if>
+
                 <c:if test="${sessionScope.user == null}">
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/auth/login">Connexion</a>

@@ -1,20 +1,31 @@
 package org.vitacare.dto.auth;
 
 public class LoginResponseDTO {
- //   private String token;
+    private int id;
     private String lastName;
     private String firstName;
     private boolean isAdmin;
     private String userType; // DOCTOR / PATIENT / STAFF
-
-    public LoginResponseDTO(String userType, boolean isAdmin, String firstName,String lastName) {
+    public LoginResponseDTO(String userType, boolean isAdmin, String firstName, String lastName) {
         this.userType = userType;
         this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
-       // this.token = token;
     }
+    public LoginResponseDTO(int id ,String userType, boolean isAdmin, String firstName,String lastName) {
+        this.id = id;
+        this.userType = userType;
+        this.isAdmin = isAdmin;
+        this.firstName = firstName;
+        this.lastName = lastName;
 
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getUserType() {
         return userType;
     }
@@ -31,13 +42,6 @@ public class LoginResponseDTO {
         isAdmin = admin;
     }
 
-   // public String getToken() {
-      //  return token;
-  //  }
-
-   // public void setToken(String token) {
- //       this.token = token;
-   // }
 
     public String getFirstName() {
         return firstName;
@@ -52,4 +56,6 @@ public class LoginResponseDTO {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
 }

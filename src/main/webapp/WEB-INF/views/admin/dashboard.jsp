@@ -175,12 +175,17 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/doctors/">
-                    <i class="bi bi-person-badge me-2"></i> Médecins
+                    <i class="bi bi-person-badge me-2"></i> Doctors
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/patients/">
                     <i class="bi bi-people me-2"></i> Patients
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="${pageContext.request.contextPath}/staffs/">
+                    <i class="bi bi-person-gear me-2"></i> Staff
                 </a>
             </li>
             <li class="nav-item">
@@ -193,11 +198,7 @@
                     <i class="bi bi-star me-2"></i> Spécialités
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/users/">
-                    <i class="bi bi-person-gear me-2"></i> Utilisateurs
-                </a>
-            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/admin/users">
                     <i class="bi bi-person-gear me-2"></i> Créer Utilisateur

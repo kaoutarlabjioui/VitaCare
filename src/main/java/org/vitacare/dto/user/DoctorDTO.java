@@ -2,13 +2,18 @@ package org.vitacare.dto.user;
 
 import org.vitacare.dto.department.DepartmentDTO;
 import org.vitacare.dto.specialityDTO.SpecialityDTO;
+import org.vitacare.entity.Speciality;
 
 public class DoctorDTO extends UserDTO {
+
     private String registration;
     private String title;
     private SpecialityDTO speciality;
 
 
+    public DoctorDTO() {
+
+    }
 
 
     public DoctorDTO(String registration, String title, SpecialityDTO speciality) {

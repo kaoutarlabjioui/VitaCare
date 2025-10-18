@@ -6,6 +6,10 @@ public class SpecialityDTO {
     private String description;
     private String code;
     private String departmentName;
+
+    public SpecialityDTO() {
+
+    }
     public SpecialityDTO(Long id, String name,String description,String code,String departmentName) {
         this.id = id;
         this.name = name;

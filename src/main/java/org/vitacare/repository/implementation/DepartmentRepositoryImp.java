@@ -22,9 +22,9 @@ public class DepartmentRepositoryImp implements DepartmentRepository {
             tx.begin();
 
             if (department.getId() == null) {
-                em.persist(department); // création
+                em.persist(department);
             } else {
-                em.merge(department);   // mise à jour
+                em.merge(department);
             }
 
             tx.commit();

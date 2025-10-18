@@ -5,6 +5,10 @@ public class PatientDTO extends UserDTO{
     private String phone;
     private String address;
 
+    public PatientDTO() {
+        super();
+    }
+
     public PatientDTO(String cin, String phone, String address) {
         this.cin = cin;
         this.phone = phone;

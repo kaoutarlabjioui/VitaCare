@@ -7,7 +7,7 @@ public class DoctorCreateDTO {
     private String lastName;
     private String registration;
     private String title;
-    private Long specialityId; // foreign key
+    private Long specialityId;
 
     public DoctorCreateDTO(String email, String password, String firstName, String lastName, String title, Long specialityId, String registration) {
         this.email = email;

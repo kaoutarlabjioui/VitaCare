@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class Patient extends User {
     private String cin;
     private LocalDate birthDate;
-    private String sex ;
+    private String sexe ;
     private String phone;
     private String address;
     @Enumerated(EnumType.STRING)
@@ -19,10 +19,10 @@ public class Patient extends User {
 
     public Patient() {}
 
-    public Patient(String cin, LocalDate birthDate, String sex, String phone, String address, BloodGroup blood) {
+    public Patient(String cin, LocalDate birthDate, String sexe, String phone, String address, BloodGroup blood) {
         this.cin = cin;
         this.birthDate = birthDate;
-        this.sex = sex;
+        this.sexe = sexe;
         this.phone = phone;
         this.address = address;
         this.blood = blood;
@@ -44,12 +44,12 @@ public class Patient extends User {
         this.birthDate = birthDate;
     }
 
-    public String getSex() {
-        return sex;
+    public String getSexe() {
+        return sexe;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex;
+    public void setSexe(String sex) {
+        this.sexe = sexe;
     }
 
     public String getAddress() {
@@ -81,7 +81,7 @@ public class Patient extends User {
         return "Patient{" +
                 "cin='" + cin + '\'' +
                 ", birthDate=" + birthDate +
-                ", sex='" + sex + '\'' +
+                ", sexe='" + sexe + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
                 ", blood=" + blood +

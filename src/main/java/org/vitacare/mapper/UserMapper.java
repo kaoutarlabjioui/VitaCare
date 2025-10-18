@@ -61,6 +61,6 @@ public class UserMapper {
                 : user instanceof Staff ? "STAFF"
                 : "USER";
 
-        return new LoginResponseDTO(type, user.isAdmin(), user.getFirstName(), user.getLastName());
+        return new LoginResponseDTO(user.getId(),type, user.isAdmin(), user.getFirstName(), user.getLastName());
     }
 }

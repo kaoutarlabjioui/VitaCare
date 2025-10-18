@@ -1,39 +1,41 @@
 package org.vitacare.dto.availability;
 
-import java.time.LocalDateTime;
+import org.vitacare.entity.enums.AvailabilityStatus;
 
-public class AvailabilityDTO {
-    private int id;
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-    public AvailabilityDTO(LocalDateTime endAt, LocalDateTime startAt, int id) {
-        this.endAt = endAt;
-        this.startAt = startAt;
-        this.id = id;
-    }
+        public class AvailabilityDTO {
+            private int id;
+            private DayOfWeek day;
+            private LocalTime startTime;
+            private LocalTime endTime;
+            private AvailabilityStatus status;
+            private String doctorName;
 
-    public int getId() {
-        return id;
-    }
+            public AvailabilityDTO() {
+            }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+            public int getId() { return id; }
+            public void setId(int id) { this.id = id; }
 
-    public LocalDateTime getStartAt() {
-        return startAt;
-    }
+            public DayOfWeek getDay() { return day; }
+            public void setDay(DayOfWeek day) { this.day = day; }
 
-    public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
-    }
+            public LocalTime getStartTime() { return startTime; }
+            public void setStartTime(LocalTime startTime) { this.startTime = startTime; }
 
-    public LocalDateTime getEndAt() {
-        return endAt;
-    }
+            public LocalTime getEndTime() { return endTime; }
+            public void setEndTime(LocalTime endTime) { this.endTime = endTime; }
 
-    public void setEndAt(LocalDateTime endAt) {
-        this.endAt = endAt;
-    }
-}
+            public AvailabilityStatus getStatus() { return status; }
+            public void setStatus(AvailabilityStatus status) { this.status = status; }
+
+            public String getDoctorName() { return doctorName; }
+            public void setDoctorName(String doctorName) { this.doctorName = doctorName; }
+        }
+
+
+
+

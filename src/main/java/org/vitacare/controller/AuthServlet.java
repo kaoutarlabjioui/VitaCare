@@ -72,11 +72,33 @@ public class AuthServlet extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("user", response);
 
+            String userType = response.getUserType();
         if (response.isAdmin()) {
             resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/");
+            return;
         }
+
+        if (userType == null) {
+            resp.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
+        switch(userType.toUpperCase()){
+            case "DOCTOR":
+                resp.sendRedirect(req.getContextPath()+"/doctors/dashboard");
+                break;
+            case "PATIENT":
+                resp.sendRedirect(req.getContextPath()+"/patients/dashboard");
+                break;
+            case "STAFF":
+                resp.sendRedirect(req.getContextPath()+"/staffs/dashboard");
+                break;
+            default:
+                resp.sendRedirect(req.getContextPath() + "/");
+                break;
+        }
+
+
     }
 
     private void handleRegister(HttpServletRequest req, HttpServletResponse resp)

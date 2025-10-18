@@ -5,6 +5,7 @@ package org.vitacare.entity;
 import jakarta.persistence.*;
 import org.vitacare.entity.enums.AvailabilityStatus;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -15,7 +16,7 @@ public class Availability {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private LocalDate day;
+    private DayOfWeek day;
     private LocalTime startTime;
     private LocalTime endTime;
 
@@ -28,7 +29,7 @@ public class Availability {
 
     public Availability() {}
 
-    public Availability(int id, LocalDate day, LocalTime startTime, LocalTime endTime, AvailabilityStatus status, Doctor doctor) {
+    public Availability(int id, DayOfWeek day, LocalTime startTime, LocalTime endTime, AvailabilityStatus status, Doctor doctor) {
         this.id = id;
         this.day = day;
         this.startTime = startTime;
@@ -45,11 +46,11 @@ public class Availability {
         this.id = id;
     }
 
-    public LocalDate getDay() {
+    public DayOfWeek getDay() {
         return day;
     }
 
-    public void setDay(LocalDate day) {
+    public void setDay(DayOfWeek day) {
         this.day = day;
     }
 

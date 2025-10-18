@@ -3,14 +3,14 @@ package org.vitacare.service.impl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.vitacare.dto.auth.*;
-import org.vitacare.entity.Doctor;
-import org.vitacare.entity.Patient;
-import org.vitacare.entity.Speciality;
-import org.vitacare.entity.User;
+import org.vitacare.entity.*;
 import org.vitacare.mapper.UserMapper;
 import org.vitacare.repository.UserRepository;
 import org.vitacare.service.AuthService;
 import org.vitacare.service.SpecialityService;
+
+import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class AuthServiceImp implements AuthService {
@@ -26,12 +26,15 @@ public class AuthServiceImp implements AuthService {
             return null;
         }
 
-        return new LoginResponseDTO(
+        LoginResponseDTO response = new LoginResponseDTO(
                 user.getClass().getSimpleName().toUpperCase(),
                 user.isAdmin(),
                 user.getFirstName(),
                 user.getLastName()
         );
+        response.setId(user.getId());
+
+        return response;
     }
     @Override
     public void register(RegisterRequestDTO dto) {
@@ -69,17 +72,37 @@ public class AuthServiceImp implements AuthService {
     }
 
 
-    public void deactivateUser(Long id){
-        User user = userRepository.findById(id);
+    @Override
+    public void deactivateUser(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
 
-        if(user == null){
-            throw new RuntimeException("User not found  with id :  " + id);
-        }
+
+        User user = optionalUser.orElseThrow(() ->
+                new RuntimeException("User not found with id: " + id)
+        );
+
 
         user.setActive(false);
+
+
         userRepository.save(user);
     }
 
+
+    @Override
+    public List<Doctor> getAllDoctors() {
+        return userRepository.getAllDoctors();
+    }
+
+    @Override
+    public List<Patient> getAllPatients() {
+        return userRepository.getAllPatients();
+    }
+
+    @Override
+    public List<Staff> getAllStaff() {
+        return userRepository.getAllStaff();
+    }
 
 
 //    @Override

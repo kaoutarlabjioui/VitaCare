@@ -23,7 +23,16 @@ public class SpecialityMapper {
         return speciality;
     }
 
+    public static Speciality toEntity(SpecialityDTO dto) {
+        if (dto == null) return null;
+        Speciality speciality = new Speciality();
+        speciality.setId(dto.getId());
+        speciality.setName(dto.getName());
+        speciality.setDescription(dto.getDescription());
+        speciality.setCode(dto.getCode());
 
+        return speciality;
+    }
 
 
 
