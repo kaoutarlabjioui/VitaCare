@@ -10,6 +10,7 @@ import org.vitacare.entity.enums.AppointmentStatus;
 import org.vitacare.entity.enums.AppointmentType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,8 +21,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private LocalDate startAt;
-    private LocalDate endAt;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
@@ -41,7 +42,7 @@ public class Appointment {
 
     public Appointment() {}
 
-    public Appointment( LocalDate startAt, LocalDate endAt, Doctor doctor, AppointmentStatus status, List<MedicalNote> medicalNotes, String createdBy,Patient patient) {
+    public Appointment( LocalDateTime startAt, LocalDateTime endAt, Doctor doctor, AppointmentStatus status, List<MedicalNote> medicalNotes, String createdBy,Patient patient) {
         this.id = id;
         this.startAt = startAt;
         this.endAt = endAt;
@@ -59,19 +60,19 @@ public class Appointment {
         this.id = id;
     }
 
-    public LocalDate getStartAt() {
+    public LocalDateTime getStartAt() {
         return startAt;
     }
 
-    public void setStartAt(LocalDate startAt) {
+    public void setStartAt(LocalDateTime startAt) {
         this.startAt = startAt;
     }
 
-    public LocalDate getEndAt() {
+    public LocalDateTime getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(LocalDate endAt) {
+    public void setEndAt(LocalDateTime endAt) {
         this.endAt = endAt;
     }
 
@@ -137,4 +138,6 @@ public class Appointment {
                 ", patient=" + patient +
                 '}';
     }
+
+
 }

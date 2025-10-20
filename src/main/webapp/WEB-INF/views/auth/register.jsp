@@ -23,7 +23,7 @@
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             margin: 20px;
         }
@@ -44,14 +44,16 @@
         }
         .register-body {
             padding: 40px 30px;
+            max-height: 70vh;
+            overflow-y: auto;
         }
-        .form-control {
+        .form-control, .form-select {
             border-radius: 10px;
             padding: 12px 15px;
             border: 2px solid #e0e0e0;
             transition: all 0.3s;
         }
-        .form-control:focus {
+        .form-control:focus, .form-select:focus {
             border-color: #667eea;
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
@@ -112,6 +114,15 @@
             font-size: 0.9rem;
             color: #555;
         }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f0f4ff;
+        }
     </style>
 </head>
 <body>
@@ -136,30 +147,10 @@
         </div>
 
         <form method="post" action="${pageContext.request.contextPath}/auth?action=register">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="firstName" class="form-label">
-                        <i class="bi bi-person me-1"></i>Prénom
-                    </label>
-                    <input type="text"
-                           class="form-control"
-                           id="firstName"
-                           name="firstName"
-                           placeholder="Jean"
-                           required>
-                </div>
 
-                <div class="col-md-6 mb-3">
-                    <label for="lastName" class="form-label">
-                        <i class="bi bi-person me-1"></i>Nom
-                    </label>
-                    <input type="text"
-                           class="form-control"
-                           id="lastName"
-                           name="lastName"
-                           placeholder="Dupont"
-                           required>
-                </div>
+            <!-- Informations de compte -->
+            <div class="section-title">
+                <i class="bi bi-shield-lock me-2"></i>Informations de connexion
             </div>
 
             <div class="mb-3">
@@ -188,6 +179,37 @@
                 <small class="text-muted">Minimum 6 caractères</small>
             </div>
 
+            <!-- Informations personnelles -->
+            <div class="section-title">
+                <i class="bi bi-person me-2"></i>Informations personnelles
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">
+                        <i class="bi bi-person me-1"></i>Prénom
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           id="firstName"
+                           name="firstName"
+                           placeholder="Jean"
+                           required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">
+                        <i class="bi bi-person me-1"></i>Nom
+                    </label>
+                    <input type="text"
+                           class="form-control"
+                           id="lastName"
+                           name="lastName"
+                           placeholder="Dupont"
+                           required>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="cin" class="form-label">
@@ -214,7 +236,7 @@
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-3">
                 <label for="address" class="form-label">
                     <i class="bi bi-geo-alt me-1"></i>Adresse
                 </label>
@@ -226,7 +248,60 @@
                        required>
             </div>
 
-            <button type="submit" class="btn btn-register">
+            <!-- Informations médicales -->
+            <div class="section-title">
+                <i class="bi bi-heart-pulse me-2"></i>Informations médicales
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="birthDate" class="form-label">
+                        <i class="bi bi-calendar-date me-1"></i>Date de naissance
+                    </label>
+                    <input type="date"
+                           class="form-control"
+                           id="birthDate"
+                           name="birthDate"
+                           max="<%= java.time.LocalDate.now() %>"
+                           required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="sexe" class="form-label">
+                        <i class="bi bi-gender-ambiguous me-1"></i>Sexe
+                    </label>
+                    <select class="form-select"
+                            id="sexe"
+                            name="sexe"
+                            required>
+                        <option value="">-- Sélectionner --</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="blood" class="form-label">
+                        <i class="bi bi-droplet-fill me-1"></i>Groupe sanguin
+                    </label>
+                    <select class="form-select"
+                            id="blood"
+                            name="blood"
+                            required>
+                        <option value="">-- Sélectionner --</option>
+                        <option value="A_POSITIVE">A+</option>
+                        <option value="A_NEGATIVE">A-</option>
+                        <option value="B_POSITIVE">B+</option>
+                        <option value="B_NEGATIVE">B-</option>
+                        <option value="AB_POSITIVE">AB+</option>
+                        <option value="AB_NEGATIVE">AB-</option>
+                        <option value="O_POSITIVE">O+</option>
+                        <option value="O_NEGATIVE">O-</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-register mt-3">
                 <i class="bi bi-person-check me-2"></i>Créer mon compte
             </button>
         </form>

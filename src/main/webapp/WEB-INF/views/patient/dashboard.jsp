@@ -164,7 +164,7 @@
             <div class="card-body">
                 <p><strong>Nom :</strong> ${user.firstName} ${user.lastName}</p>
                 <p><strong>Rôle :</strong> Agent administratif</p>
-                <p><strong>Email :</strong> ${user.email}</p>
+                <p><strong>Email :</strong> </p>
             </div>
         </div>
     </div>

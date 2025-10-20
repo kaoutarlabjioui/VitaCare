@@ -48,7 +48,7 @@ public class Patient extends User {
         return sexe;
     }
 
-    public void setSexe(String sex) {
+    public void setSexe(String sexe) {
         this.sexe = sexe;
     }
 

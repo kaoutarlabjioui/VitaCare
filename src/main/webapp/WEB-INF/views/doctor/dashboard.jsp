@@ -2,51 +2,47 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-<c:set var="pageTitle" value="Tableau de bord - Docteur" scope="request"/>
+<c:set var="pageTitle" value="Tableau de bord - Patient" scope="request"/>
 <jsp:include page="../common/header.jsp"/>
 
 <div class="container mt-4">
-    <h2 class="mb-4"><i class="bi bi-stethoscope"></i> Tableau de bord du docteur</h2>
+    <h2 class="mb-4"><i class="bi bi-person-heart"></i> Bienvenue ${user.firstName} ${user.lastName}</h2>
 
-    <!-- Statistiques -->
+    <!-- Statistiques Patient -->
     <div class="row g-4 mb-4">
         <div class="col-md-3">
             <div class="card text-white bg-primary shadow">
                 <div class="card-body text-center">
-                    <h6>Rendez-vous du jour</h6>
-                    <h2>${stats.todayAppointments}</h2>
+                    <h6>Rendez-vous à venir</h6>
+                    <h2>0</h2>
+                    <small>Prochainement disponible</small>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card text-white bg-success shadow">
                 <div class="card-body text-center">
-                    <h6>Patients suivis</h6>
-                    <h2>${stats.totalPatients}</h2>
+                    <h6>Rendez-vous passés</h6>
+                    <h2>0</h2>
+                    <small>Prochainement disponible</small>
                 </div>
             </div>
         </div>
-        <c:set var="availableCount" value="0" />
-
-        <c:forEach var="a" items="${availabilities}">
-            <c:if test="${a.status.name() == 'AVAILABLE'}">
-                <c:set var="availableCount" value="${availableCount + 1}" />
-            </c:if>
-        </c:forEach>
-
         <div class="col-md-3">
             <div class="card text-white bg-info shadow">
                 <div class="card-body text-center">
-                    <h6>Créneaux disponibles</h6>
-                    <h2>${availableCount}</h2>
+                    <h6>Médecins consultés</h6>
+                    <h2>0</h2>
+                    <small>Prochainement disponible</small>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-secondary shadow">
+            <div class="card text-white bg-warning shadow">
                 <div class="card-body text-center">
-                    <h6>Prochains rendez-vous</h6>
-                    <h2>${appointments.size()}</h2>
+                    <h6>Prochain RDV</h6>
+                    <h2>-</h2>
+                    <small>Aucun rendez-vous</small>
                 </div>
             </div>
         </div>
@@ -54,116 +50,35 @@
 
     <!-- 2 colonnes principales -->
     <div class="row g-4">
-        <!-- 🕒 Disponibilités -->
+        <!-- 📅 Mes prochains rendez-vous -->
         <div class="col-md-6">
             <div class="card shadow mb-4">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0"><i class="bi bi-clock"></i> Mes disponibilités</h5>
+                    <h5 class="mb-0"><i class="bi bi-calendar-check"></i> Mes prochains rendez-vous</h5>
+                    <a href="${pageContext.request.contextPath}/appointments/book" class="btn btn-sm btn-light">
+                        <i class="bi bi-plus-circle"></i> Nouveau RDV
+                    </a>
                 </div>
                 <div class="card-body">
-                    <c:if test="${not empty error}">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                ${error}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                        </div>
-                    </c:if>
-
-                    <form action="${pageContext.request.contextPath}/availabilities/create" method="post" class="row g-3 mb-3">
-                        <div class="col-md-4">
-                            <label class="form-label">Jour de la semaine</label>
-                            <select name="day" class="form-select" required>
-                                <option value="">-- Sélectionner --</option>
-                                <option value="MONDAY">Lundi</option>
-                                <option value="TUESDAY">Mardi</option>
-                                <option value="WEDNESDAY">Mercredi</option>
-                                <option value="THURSDAY">Jeudi</option>
-                                <option value="FRIDAY">Vendredi</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Début</label>
-                            <input type="time" name="startTime" class="form-control" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Fin</label>
-                            <input type="time" name="endTime" class="form-control" required>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <button type="submit" class="btn btn-success w-100"><i class="bi bi-plus-circle"></i></button>
-                        </div>
-                    </form>
-
-                    <c:if test="${empty availabilities}">
-                        <p class="text-muted text-center mb-0">Aucune disponibilité ajoutée.</p>
-                    </c:if>
-
-                    <c:if test="${not empty availabilities}">
-                        <table class="table table-sm table-hover align-middle">
-                            <thead>
-                            <tr>
-                                <th>Jour</th><th>Début</th><th>Fin</th><th>Statut</th><th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="a" items="${availabilities}">
-                                <tr>
-                                    <td>${a.day}</td>
-                                    <td>${a.startTime}</td>
-                                    <td>${a.endTime}</td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${a.status.name() == 'AVAILABLE'}">
-                                                <span class="badge bg-success">${a.status.name()}</span>
-                                            </c:when>
-                                            <c:when test="${a.status.name() == 'BOOKED'}">
-                                                <span class="badge bg-info">${a.status.name()}</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="badge bg-secondary">${a.status.name()}</span>
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                    </td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/availabilities/delete?id=${a.id}"
-                                           class="btn btn-sm btn-outline-danger"
-                                           onclick="return confirm('Supprimer ce créneau ?')">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </c:if>
-                </div>
-            </div>
-        </div>
-
-        <!-- 📅 Rendez-vous à venir -->
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0"><i class="bi bi-calendar-week"></i> Mes rendez-vous à venir</h5>
-                </div>
-                <div class="card-body">
-                    <c:if test="${empty appointments}">
+                    <!-- À activer plus tard avec appointments -->
+                    <%--
+                    <c:if test="${empty upcomingAppointments}">
                         <p class="text-muted text-center mb-0">Aucun rendez-vous prévu.</p>
                     </c:if>
 
-                    <c:if test="${not empty appointments}">
+                    <c:if test="${not empty upcomingAppointments}">
                         <table class="table table-hover align-middle">
                             <thead>
                             <tr>
-                                <th>Date</th><th>Heure</th><th>Patient</th><th>Statut</th>
+                                <th>Date</th><th>Heure</th><th>Médecin</th><th>Statut</th><th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="appt" items="${appointments}">
+                            <c:forEach var="appt" items="${upcomingAppointments}">
                                 <tr>
                                     <td><fmt:formatDate value="${appt.appointmentDate}" pattern="dd/MM/yyyy"/></td>
                                     <td><fmt:formatDate value="${appt.appointmentDate}" pattern="HH:mm"/></td>
-                                    <td>${appt.patient.firstName} ${appt.patient.lastName}</td>
+                                    <td>Dr. ${appt.doctor.firstName} ${appt.doctor.lastName}</td>
                                     <td>
                                         <span class="badge bg-${appt.status == 'SCHEDULED' ? 'primary' :
                                                                appt.status == 'CANCELLED' ? 'danger' :
@@ -171,11 +86,159 @@
                                                 ${appt.status}
                                         </span>
                                     </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/appointments/details?id=${appt.id}"
+                                           class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <c:if test="${appt.status == 'SCHEDULED'}">
+                                            <a href="${pageContext.request.contextPath}/appointments/cancel?id=${appt.id}"
+                                               class="btn btn-sm btn-outline-danger"
+                                               onclick="return confirm('Annuler ce rendez-vous ?')">
+                                                <i class="bi bi-x-circle"></i>
+                                            </a>
+                                        </c:if>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </c:if>
+                    --%>
+
+                    <!-- Message temporaire -->
+                    <div class="alert alert-info text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> Fonctionnalité de rendez-vous en cours de développement
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 🩺 Médecins disponibles -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-stethoscope"></i> Médecins disponibles</h5>
+                </div>
+                <div class="card-body">
+                    <!-- À activer plus tard avec la liste des doctors -->
+                    <%--
+                    <c:if test="${empty availableDoctors}">
+                        <p class="text-muted text-center mb-0">Aucun médecin disponible pour le moment.</p>
+                    </c:if>
+
+                    <c:if test="${not empty availableDoctors}">
+                        <div class="list-group">
+                            <c:forEach var="doctor" items="${availableDoctors}">
+                                <a href="${pageContext.request.contextPath}/appointments/book?doctorId=${doctor.id}"
+                                   class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Dr. ${doctor.firstName} ${doctor.lastName}</h6>
+                                        <small class="text-success"><i class="bi bi-circle-fill"></i> Disponible</small>
+                                    </div>
+                                    <p class="mb-1 text-muted">${doctor.speciality}</p>
+                                    <small>${doctor.department}</small>
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </c:if>
+                    --%>
+
+                    <!-- Message temporaire -->
+                    <div class="alert alert-info text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> Liste des médecins en cours de développement
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mes informations personnelles -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="bi bi-person-vcard"></i> Mes informations</h5>
+                    <a href="${pageContext.request.contextPath}/patients/edit?id=${user.id}" class="btn btn-sm btn-light">
+                        <i class="bi bi-pencil"></i> Modifier
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Nom :</strong> ${user.firstName} ${user.lastName}</p>
+                          
+                            <c:if test="${not empty patient}">
+                                <p><strong>CIN :</strong> ${patient.cin}</p>
+                                <p><strong>Téléphone :</strong> ${patient.phone}</p>
+                            </c:if>
+                        </div>
+                        <div class="col-md-6">
+                            <c:if test="${not empty patient}">
+                                <p><strong>Date de naissance :</strong>
+                                    <fmt:formatDate value="${patient.birthDate}" pattern="dd/MM/yyyy"/>
+                                </p>
+                                <p><strong>Sexe :</strong> ${patient.sexe}</p>
+                                <p><strong>Groupe sanguin :</strong> ${patient.blood}</p>
+                                <p><strong>Adresse :</strong> ${patient.address}</p>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Historique des rendez-vous -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="bi bi-clock-history"></i> Historique des rendez-vous</h5>
+                </div>
+                <div class="card-body">
+                    <!-- À activer plus tard avec appointments -->
+                    <%--
+                    <c:if test="${empty pastAppointments}">
+                        <p class="text-muted text-center mb-0">Aucun rendez-vous passé.</p>
+                    </c:if>
+
+                    <c:if test="${not empty pastAppointments}">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                            <tr>
+                                <th>Date</th><th>Heure</th><th>Médecin</th><th>Spécialité</th><th>Statut</th><th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="appt" items="${pastAppointments}">
+                                <tr>
+                                    <td><fmt:formatDate value="${appt.appointmentDate}" pattern="dd/MM/yyyy"/></td>
+                                    <td><fmt:formatDate value="${appt.appointmentDate}" pattern="HH:mm"/></td>
+                                    <td>Dr. ${appt.doctor.firstName} ${appt.doctor.lastName}</td>
+                                    <td>${appt.doctor.speciality}</td>
+                                    <td>
+                                        <span class="badge bg-${appt.status == 'DONE' ? 'success' : 'danger'}">
+                                                ${appt.status}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/appointments/details?id=${appt.id}"
+                                           class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i> Détails
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:if>
+                    --%>
+
+                    <!-- Message temporaire -->
+                    <div class="alert alert-info text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> Historique des rendez-vous en cours de développement
+                    </div>
                 </div>
             </div>
         </div>

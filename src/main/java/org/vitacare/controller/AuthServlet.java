@@ -11,9 +11,11 @@ import jakarta.servlet.http.HttpSession;
 import org.vitacare.dto.auth.LoginRequestDTO;
 import org.vitacare.dto.auth.LoginResponseDTO;
 import org.vitacare.dto.auth.RegisterRequestDTO;
+import org.vitacare.entity.enums.BloodGroup;
 import org.vitacare.service.AuthService;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @WebServlet(name = "AuthServlet", urlPatterns = {"/auth"})
 public class AuthServlet extends HttpServlet {
@@ -104,18 +106,43 @@ public class AuthServlet extends HttpServlet {
     private void handleRegister(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         try {
+
+            BloodGroup blood = null;
+            String bloodParam = req.getParameter("blood");
+            if (bloodParam != null && !bloodParam.isEmpty()) {
+                try {
+                    blood = BloodGroup.valueOf(bloodParam.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    System.out.println(" Groupe sanguin invalide reçu : " + bloodParam);
+                }
+            }
+
+
+            LocalDate birthDate = null;
+            String birthDateParam = req.getParameter("birthDate");
+            if (birthDateParam != null && !birthDateParam.isEmpty()) {
+                birthDate = LocalDate.parse(birthDateParam);
+            }
+
+
             RegisterRequestDTO dto = new RegisterRequestDTO(
                     req.getParameter("email"),
                     req.getParameter("password"),
                     req.getParameter("firstName"),
                     req.getParameter("lastName"),
-                    "PATIENT", 
-                    null, null,
+                    "PATIENT",
+                    null,
+                    null,
                     req.getParameter("cin"),
+                    birthDate,
+                    req.getParameter("sexe"),
                     req.getParameter("phone"),
                     req.getParameter("address"),
-                    null, null
+                    blood,
+                    null,
+                    null
             );
+            System.out.println("Sexe reçu : " + req.getParameter("sexe"));
 
             authService.register(dto);
             resp.sendRedirect(req.getContextPath() + "/auth?action=login");

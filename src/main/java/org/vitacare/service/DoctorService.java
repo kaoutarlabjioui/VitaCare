@@ -9,5 +9,5 @@ public interface DoctorService {
     Optional<DoctorDTO> getById(Long id);
     List<DoctorDTO> getAllDoctors();
     Optional<DoctorDTO> getByUserId(Long userId);
-
+  //  List<DoctorDTO> searchByName(String name);
 }

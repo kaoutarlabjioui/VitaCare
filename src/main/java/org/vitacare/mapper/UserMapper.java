@@ -34,8 +34,12 @@ public class UserMapper {
                 patient.setFirstName(dto.getFirstName());
                 patient.setLastName(dto.getLastName());
                 patient.setCin(dto.getCin());
+                patient.setBirthDate(dto.getBirthDate() );
+                patient.setSexe(dto.getSexe());
                 patient.setPhone(dto.getPhone());
                 patient.setAddress(dto.getAddress());
+                patient.setBlood(dto.getBlood());
+
                 patient.setAdmin(false);
                 return patient;
 
